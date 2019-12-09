@@ -43,7 +43,8 @@
                     RelativePanel.AlignHorizontalCenterWithPanel="True"
                     RelativePanel.AlignVerticalCenterWithPanel="True"
                     Content="Generate"
-                    Background="White"/>
+                    Background="White"
+                    Click="Generate_Click"/>
            
         </RelativePanel>
 
