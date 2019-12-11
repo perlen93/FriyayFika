@@ -42,7 +42,7 @@ namespace ProjectRecept
     }
 
     public sealed partial class MainPage : Page
-    {     
+    {
         public MainPage()
         {
             this.InitializeComponent();
@@ -69,7 +69,13 @@ namespace ProjectRecept
                 throw new Exception("Invalid header value: " + header);
             }
 
-            Uri requestUri = new Uri("http://www.recipepuppy.com/api/");
+            var input = "";
+            if (Ingredient.IsChecked == true)
+            {
+                input = Ingredient.Content.ToString();
+            }
+
+            Uri requestUri = new Uri("http://www.recipepuppy.com/api/" + input);
 
             Windows.Web.Http.HttpResponseMessage httpResponse = new Windows.Web.Http.HttpResponseMessage();
             string httpResponseBody = "";
@@ -84,7 +90,6 @@ namespace ProjectRecept
             {
                 httpResponseBody = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
             }
-
 
             var rootObj = JsonConvert.DeserializeObject<RootObject>(httpResponseBody);
             var message = "";
