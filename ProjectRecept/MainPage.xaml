@@ -13,17 +13,17 @@
             <RowDefinition Height="100"/>
             <RowDefinition Height="auto"/>
             <RowDefinition/>
-
-
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
 
+        <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
+   
         <Grid Background="LightBlue"
               Grid.ColumnSpan="2"
               Grid.Row="0"
               Grid.Column="0"/>
+        
         <TextBlock Foreground="Black" 
                        FontSize="60"
                        HorizontalAlignment="Center"
@@ -33,18 +33,18 @@
 
         <RelativePanel Background="LightPink" 
                        Grid.Row="1">
+
             <TextBlock RelativePanel.AlignHorizontalCenterWithPanel="True"
                        RelativePanel.AlignVerticalCenterWithPanel="True"
                        Foreground="Black">
                 Recipe Here
             </TextBlock>
+
         </RelativePanel>
-        
-        
-            <StackPanel Background="LightPink"  
-                        HorizontalAlignment="Center"
-                        Grid.Row="1"
-                        >
+
+        <StackPanel Background="LightPink" 
+                    HorizontalAlignment="Center"
+                    Grid.Row="1">
                 
                 <CheckBox x:Name="Ingredient"
                         Content="Butter"/>
@@ -57,7 +57,7 @@
             
                 <CheckBox x:Name="Ingredient3"
                         Content="Chocolate"/>            
-            </StackPanel>            
+        </StackPanel>            
 
         <RelativePanel Grid.RowSpan="3">
             
@@ -70,6 +70,5 @@
                 Click="Generate_Click"/>  
             
         </RelativePanel>  
-        
     </Grid>
 </Page>
