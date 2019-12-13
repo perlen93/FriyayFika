@@ -11,8 +11,10 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
-            <RowDefinition Height="300"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition/>
+
+
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
 
@@ -29,30 +31,45 @@
                 Friyay Fika
         </TextBlock>
 
-        <RelativePanel Background="LightPink" Grid.Row="1">
+        <RelativePanel Background="LightPink" 
+                       Grid.Row="1">
             <TextBlock RelativePanel.AlignHorizontalCenterWithPanel="True"
                        RelativePanel.AlignVerticalCenterWithPanel="True"
                        Foreground="Black">
                 Recipe Here
             </TextBlock>
-            <ListView
-                DisplayMemberPath="TheRecipe"
-                x:Name="Answer">
+        </RelativePanel>
+        
+        
+            <StackPanel Background="LightPink"  
+                        HorizontalAlignment="Center"
+                        Grid.Row="1"
+                        >
                 
-            </ListView>
-        </RelativePanel>
+                <CheckBox x:Name="Ingredient"
+                        Content="Butter"/>
+            
+                <CheckBox x:Name="Ingredient1"
+                          Content="Cinnamon"/> 
+            
+                <CheckBox x:Name="Ingredient2"
+                        Content="Sugar"/>
+            
+                <CheckBox x:Name="Ingredient3"
+                        Content="Chocolate"/>            
+            </StackPanel>            
 
-        <RelativePanel Background="LightPink" Grid.Row="2">
-
+        <RelativePanel Grid.RowSpan="3">
+            
             <Button x:Name="Generate"
-                    RelativePanel.AlignHorizontalCenterWithPanel="True"
-                    RelativePanel.AlignVerticalCenterWithPanel="True"
-                    Content="Generate"
-                    Foreground="Black"
-                    Background="White"
-                    Click="Generate_Click"/>
-           
-        </RelativePanel>
-
+                RelativePanel.AlignHorizontalCenterWithPanel="True"
+                RelativePanel.AlignVerticalCenterWithPanel="True"
+                Content="Generate"
+                Background="White"
+                Foreground="Black"
+                Click="Generate_Click"/>  
+            
+        </RelativePanel>  
+        
     </Grid>
 </Page>
