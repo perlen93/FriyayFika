@@ -88,7 +88,7 @@ namespace ProjectRecept
 
             var rootObj = JsonConvert.DeserializeObject<RootObject>(httpResponseBody);
             var message = "";
-
+            
             RootObject root = new RootObject
             {
                 title = rootObj.title,

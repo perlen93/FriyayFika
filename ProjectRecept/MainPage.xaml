@@ -35,6 +35,11 @@
                        Foreground="Black">
                 Recipe Here
             </TextBlock>
+            <ListView
+                DisplayMemberPath="TheRecipe"
+                x:Name="Answer">
+                
+            </ListView>
         </RelativePanel>
 
         <RelativePanel Background="LightPink" Grid.Row="2">
@@ -43,6 +48,7 @@
                     RelativePanel.AlignHorizontalCenterWithPanel="True"
                     RelativePanel.AlignVerticalCenterWithPanel="True"
                     Content="Generate"
+                    Foreground="Black"
                     Background="White"
                     Click="Generate_Click"/>
            
