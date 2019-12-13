@@ -69,13 +69,19 @@ namespace ProjectRecept
                 throw new Exception("Invalid header value: " + header);
             }
 
-            var input = "";
-            if (Ingredient.IsChecked == true)
+           var input = CheckSpecifiedIngredients();
+            string uri = "";
+          
+            if (String.IsNullOrEmpty(input))
             {
-                input = Ingredient.Content.ToString();
+                uri = "http://www.recipepuppy.com/api/" + input;
             }
-
-            Uri requestUri = new Uri("http://www.recipepuppy.com/api/" + input);
+            else
+            {
+                var hej= input.TrimEnd(',');
+                uri = "http://www.recipepuppy.com/api/?i=" + hej;
+            }
+            Uri requestUri = new Uri(uri);
 
             Windows.Web.Http.HttpResponseMessage httpResponse = new Windows.Web.Http.HttpResponseMessage();
             string httpResponseBody = "";
@@ -93,7 +99,7 @@ namespace ProjectRecept
 
             var rootObj = JsonConvert.DeserializeObject<RootObject>(httpResponseBody);
             var message = "";
-            
+
             RootObject root = new RootObject
             {
                 title = rootObj.title,
@@ -109,6 +115,39 @@ namespace ProjectRecept
 
             var messageDialog = new MessageDialog(message);
             await messageDialog.ShowAsync();
+
         }
+
+        public string CheckSpecifiedIngredients()
+        {
+            var input = new List<string>();
+
+            if (Ingredient.IsChecked == true)
+            {
+                input.Add(Ingredient.Content.ToString());                
+            }
+            if (Ingredient1.IsChecked == true)
+            {
+                input.Add(Ingredient1.Content.ToString());
+            }
+            if (Ingredient2.IsChecked == true)
+            {
+                input.Add(Ingredient2.Content.ToString());                
+            }
+            if (Ingredient3.IsChecked == true)
+            {
+                input.Add(Ingredient3.Content.ToString());                
+            }
+
+            string huh = "";
+            foreach (var ingredient in input)
+            {
+                huh += ingredient+",";
+            }
+
+            return huh;
+        }
+
+
     }
 }
