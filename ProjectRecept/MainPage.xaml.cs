@@ -70,6 +70,7 @@ namespace ProjectRecept
             }
 
             var input = "";
+            
             if (Ingredient.IsChecked == true)
             {
                 input = Ingredient.Content.ToString();
@@ -110,5 +111,6 @@ namespace ProjectRecept
             var messageDialog = new MessageDialog(message);
             await messageDialog.ShowAsync();
         }
+
     }
 }
