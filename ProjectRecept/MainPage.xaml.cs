@@ -83,7 +83,7 @@ namespace ProjectRecept
             return httpResponseBody;
         }
 
-        private async void GetRecepie(object sender, RoutedEventArgs e)
+        private async Task<string> GetRecepieAsync(object sender, RoutedEventArgs e)
         { 
             var inputIngredient = CheckSpecifiedIngredients();
             string uri = "";
@@ -122,6 +122,8 @@ namespace ProjectRecept
                 var messageDialog = new MessageDialog(message);
                 await messageDialog.ShowAsync();
 
+                return message;
+                // nu returnerar den URL strängen. Denna behöver läggas in 
                 // koppla så knappen redriectar till RecipeVIew
                 // .Navigate(typeof(RecipeView)); 
             }
