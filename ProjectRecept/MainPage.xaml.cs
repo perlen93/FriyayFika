@@ -114,21 +114,17 @@ namespace ProjectRecept
                     results = rootObj.results
                 };
 
-                // change to choose random recpie insted of alway the last one
-                foreach (var recepie in root.results)
-                {
-                    message = recepie.href;
-                };
+                Random rnd = new Random();
+                int randomIndex = rnd.Next(rootObj.results.Count);
+                var randomItem = rootObj.results[randomIndex].href;
+                message = randomItem;               
+               
                 var messageDialog = new MessageDialog(message);
                 await messageDialog.ShowAsync();
 
                 // koppla så knappen redriectar till RecipeVIew
                 // .Navigate(typeof(RecipeView)); 
             }
-
-
-
-
         }
 
         public string CheckSpecifiedIngredients()
