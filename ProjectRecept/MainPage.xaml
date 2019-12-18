@@ -2,9 +2,9 @@
     x:Class="ProjectRecept.MainPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:ProjectRecept"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:navigation="using:Windows.UI.Xaml.Controls"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="497" Width="810">
 
@@ -75,7 +75,13 @@
                 Content="Generate"
                 Background="White"
                 Foreground="Black"
-                Click="GetRecepie"/>              
+                Click="GetRecepie"
+                Tag="/Views/RecipeView.xaml"/>
+            
+            <navigation:Frame x:Name="navFrame"
+                              HorizontalContentAlignment="Stretch"
+                              VerticalContentAlignment="Stretch"
+                              />
         </RelativePanel>  
     </Grid>
 </Page>
