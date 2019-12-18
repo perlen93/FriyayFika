@@ -50,6 +50,9 @@
                        RelativePanel.AlignVerticalCenterWithPanel="True">
                 Recipe here
             </TextBlock>
+            <WebView>
+                
+            </WebView>
         </RelativePanel>
 
     </Grid>
