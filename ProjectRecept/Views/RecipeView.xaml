@@ -36,9 +36,10 @@
                     Background="White"
                     RelativePanel.AlignHorizontalCenterWithPanel="True"
                     RelativePanel.AlignVerticalCenterWithPanel="True"
-                    Content="Back">
-
+                    FontFamily=" Segoe MDL2 Assets">
+                <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE72B;" FontSize="60"/>
             </Button>
+            
         </RelativePanel>
         
         <RelativePanel Background="LightPink"
