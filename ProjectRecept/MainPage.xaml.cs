@@ -108,6 +108,7 @@ namespace ProjectRecept
                 results = rootObj.results
             };
 
+            // change to choose random recpie insted of alway the last one
             foreach (var recepie in root.results)
             {
                 message = recepie.href;
