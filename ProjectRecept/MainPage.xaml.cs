@@ -1,11 +1,13 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ProjectRecept.Views;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Popups;
@@ -48,12 +50,7 @@ namespace ProjectRecept
             this.InitializeComponent();
         }
 
-        private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private async void Generate_Click(object sender, RoutedEventArgs e)
+        private async Task<string> GetResponseBody(Uri requestUri)
         {
             Windows.Web.Http.HttpClient httpClient = new Windows.Web.Http.HttpClient();
             var headers = httpClient.DefaultRequestHeaders;
@@ -67,22 +64,8 @@ namespace ProjectRecept
             if (!headers.UserAgent.TryParseAdd(header))
             {
                 throw new Exception("Invalid header value: " + header);
-            }
-
-           var input = CheckSpecifiedIngredients();
-            string uri = "";
-          
-            if (String.IsNullOrEmpty(input))
-            {
-                uri = "http://www.recipepuppy.com/api/" + input;
-            }
-            else
-            {
-                var hej= input.TrimEnd(',');
-                uri = "http://www.recipepuppy.com/api/?i=" + hej;
-            }
-            Uri requestUri = new Uri(uri);
-
+            }         
+            
             Windows.Web.Http.HttpResponseMessage httpResponse = new Windows.Web.Http.HttpResponseMessage();
             string httpResponseBody = "";
 
@@ -97,25 +80,54 @@ namespace ProjectRecept
                 httpResponseBody = "Error: " + ex.HResult.ToString("X") + " Message: " + ex.Message;
             }
 
-            var rootObj = JsonConvert.DeserializeObject<RootObject>(httpResponseBody);
-            var message = "";
+            return httpResponseBody;
+        }
 
-            RootObject root = new RootObject
-            {
-                title = rootObj.title,
-                version = rootObj.version,
-                href = rootObj.href,
-                results = rootObj.results
-            };
+        private async void GetRecepie(object sender, RoutedEventArgs e)
+        { 
+            var input = CheckSpecifiedIngredients();
+            string uri = "";
 
-            // change to choose random recpie insted of alway the last one
-            foreach (var recepie in root.results)
+            if (String.IsNullOrEmpty(input))
             {
-                message = recepie.href;
+                uri = "http://www.recipepuppy.com/api/" + input;
+            }
+            else
+            {
+                var hej = input.TrimEnd(',');
+                uri = "http://www.recipepuppy.com/api/?i=" + hej;
+            }
+            Uri requestUri = new Uri(uri);
+
+            string httpResponseBody = await GetResponseBody(requestUri);
+
+            if (!String.IsNullOrEmpty(httpResponseBody))
+            {
+                var rootObj = JsonConvert.DeserializeObject<RootObject>(httpResponseBody);
+                var message = "";
+
+                RootObject root = new RootObject
+                {
+                    title = rootObj.title,
+                    version = rootObj.version,
+                    href = rootObj.href,
+                    results = rootObj.results
+                };
+
+                // change to choose random recpie insted of alway the last one
+                foreach (var recepie in root.results)
+                {
+                    message = recepie.href;
+                };
+                var messageDialog = new MessageDialog(message);
+                await messageDialog.ShowAsync();
+
+                // koppla så knappen redriectar till RecipeVIew
+                // .Navigate(typeof(RecipeView)); 
             }
 
-            var messageDialog = new MessageDialog(message);
-            await messageDialog.ShowAsync();
+
+
 
         }
 
@@ -125,7 +137,7 @@ namespace ProjectRecept
 
             if (Ingredient.IsChecked == true)
             {
-                input.Add(Ingredient.Content.ToString());                
+                input.Add(Ingredient.Content.ToString());
             }
             if (Ingredient1.IsChecked == true)
             {
@@ -133,17 +145,17 @@ namespace ProjectRecept
             }
             if (Ingredient2.IsChecked == true)
             {
-                input.Add(Ingredient2.Content.ToString());                
+                input.Add(Ingredient2.Content.ToString());
             }
             if (Ingredient3.IsChecked == true)
             {
-                input.Add(Ingredient3.Content.ToString());                
+                input.Add(Ingredient3.Content.ToString());
             }
 
             string huh = "";
             foreach (var ingredient in input)
             {
-                huh += ingredient+",";
+                huh += ingredient + ",";
             }
 
             return huh;
