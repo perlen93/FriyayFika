@@ -50,7 +50,7 @@ namespace ProjectRecept
             this.InitializeComponent();
         }
 
-        private async Task<string> GetResponseBody(Uri requestUri)
+        private async Task<string> GetResponseBodyAsync(Uri requestUri)
         {
             Windows.Web.Http.HttpClient httpClient = new Windows.Web.Http.HttpClient();
             var headers = httpClient.DefaultRequestHeaders;
@@ -85,21 +85,21 @@ namespace ProjectRecept
 
         private async void GetRecepie(object sender, RoutedEventArgs e)
         { 
-            var input = CheckSpecifiedIngredients();
+            var inputIngredient = CheckSpecifiedIngredients();
             string uri = "";
 
-            if (String.IsNullOrEmpty(input))
+            if (String.IsNullOrEmpty(inputIngredient))
             {
-                uri = "http://www.recipepuppy.com/api/" + input;
+                uri = "http://www.recipepuppy.com/api/" + inputIngredient;
             }
             else
             {
-                var hej = input.TrimEnd(',');
-                uri = "http://www.recipepuppy.com/api/?i=" + hej;
+                var ingredients = inputIngredient.TrimEnd(',');
+                uri = "http://www.recipepuppy.com/api/?i=" + ingredients;
             }
             Uri requestUri = new Uri(uri);
 
-            string httpResponseBody = await GetResponseBody(requestUri);
+            string httpResponseBody = await GetResponseBodyAsync(requestUri);
 
             if (!String.IsNullOrEmpty(httpResponseBody))
             {
@@ -129,32 +129,25 @@ namespace ProjectRecept
 
         public string CheckSpecifiedIngredients()
         {
-            var input = new List<string>();
+            var specifiedIngredients = new List<string>();
+            CheckBox[] checkboxes = new CheckBox[] 
+            { Butter, Cinnamon, Sugar, Chocolate };
 
-            if (Ingredient.IsChecked == true)
+            foreach (var ingredient in checkboxes)
             {
-                input.Add(Ingredient.Content.ToString());
-            }
-            if (Ingredient1.IsChecked == true)
-            {
-                input.Add(Ingredient1.Content.ToString());
-            }
-            if (Ingredient2.IsChecked == true)
-            {
-                input.Add(Ingredient2.Content.ToString());
-            }
-            if (Ingredient3.IsChecked == true)
-            {
-                input.Add(Ingredient3.Content.ToString());
-            }
+                if (ingredient.IsChecked == true)
+                {
+                   specifiedIngredients.Add(ingredient.Content.ToString());
+                }
+            }                   
 
-            string huh = "";
-            foreach (var ingredient in input)
+            string choosenIngredients = "";
+            foreach (var specified in specifiedIngredients)
             {
-                huh += ingredient + ",";
+                choosenIngredients += specified + ",";
             }
 
-            return huh;
+            return choosenIngredients;
         }
 
 
