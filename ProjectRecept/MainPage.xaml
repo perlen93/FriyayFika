@@ -47,19 +47,24 @@
         <StackPanel Background="LightPink" 
                     HorizontalAlignment="Center"
                     Grid.Row="1"
-                    Margin="0 10 0 0">
-                
-                <CheckBox x:Name="Ingredient"
-                        Content="Butter"/>
-            
-                <CheckBox x:Name="Ingredient1"
-                          Content="Cinnamon"/> 
-            
-                <CheckBox x:Name="Ingredient2"
-                        Content="Sugar"/>
-            
-                <CheckBox x:Name="Ingredient3"
-                        Content="Chocolate"/>            
+                    Margin="0 10 0 0"
+                     x:Name="stackPanel">
+
+            <CheckBox x:Name="Butter"
+                        Content="Butter"
+                          Tag="Butter"/>
+
+            <CheckBox x:Name="Cinnamon"
+                          Content="Cinnamon"
+                          Tag="Cinnamon"/>
+
+            <CheckBox x:Name="Sugar"
+                        Content="Sugar"
+                          Tag="Sugar"/>
+
+            <CheckBox x:Name="Chocolate"
+                        Content="Chocolate"
+                          Tag="Chocolate"/>            
         </StackPanel>            
 
         <RelativePanel Grid.Row="3" Background="LightPink" >
