@@ -68,11 +68,11 @@ namespace ProjectRecept
             return httpResponseBody;
         }
 
-        private async Task<string> GetRandomRecipieURL()
+        private async Task<string> GetRandomRecipieURLAsync()
         {
             var inputIngredient = CheckSpecifiedIngredients();
             string uri = "";
-            var message = "hej";
+            var message = "";
 
             if (String.IsNullOrEmpty(inputIngredient))
             {
@@ -122,25 +122,18 @@ namespace ProjectRecept
 
         public void GetRecepieAsync(object sender, RoutedEventArgs e)
         {
-            var recipeURL = GetRandomRecipieURL().ToString();
+            var recipeURL = GetRandomRecipieURLAsync().ToString();
+
+            RecipeView recipiePage = new RecipeView();
+            this.Content = recipiePage;
+
+            // hur få in denna targetUri med till recipiePage?
+            Uri targetUri = new Uri(recipeURL);
 
             //här kan vi anv. oss av reseptURL o skicka den till ReipieView 
             // där webView1 borde reppar den view vi vill skicka
-            //Try cathcen är egentligen till för när vi ska visa upp websida i xaml
-            try
-            {
-                RecipeView recipiePage = new RecipeView();
-                this.Content = recipiePage;
-
-                // hur få in denna targetUri med till recipiePage?
-                Uri targetUri = new Uri(recipeURL);
-
-
-            }
-            catch (FormatException ex)
-            {
-                // Bad address.
-            }
+            // Kör Try catchen är egentligen till för när vi ska visa upp websida i xaml
+            // DENNA METOD ÄR INTE KLAR!!
         }
 
         public string CheckSpecifiedIngredients()
