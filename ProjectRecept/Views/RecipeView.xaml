@@ -50,10 +50,11 @@
                        RelativePanel.AlignVerticalCenterWithPanel="True">
                 Recipe here
             </TextBlock>
-            <WebView x:Name="WebView1">
-                
-            </WebView>
+
+
         </RelativePanel>
+        <WebView x:Name="webView1"
+                 Grid.Row="2"/>
 
     </Grid>
 </Page>

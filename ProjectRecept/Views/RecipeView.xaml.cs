@@ -25,6 +25,10 @@ namespace ProjectRecept.Views
         public RecipeView()
         {
             this.InitializeComponent();
+
+            Uri targetUri = new Uri("http://www.google.com");
+            webView1.Navigate(targetUri);
         }
+
     }
 }
