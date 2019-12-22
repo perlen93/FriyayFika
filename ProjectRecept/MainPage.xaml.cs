@@ -84,7 +84,24 @@ namespace ProjectRecept
                 uri = "http://www.recipepuppy.com/api/?i=" + ingredients;
             }
             Uri requestUri = new Uri(uri);
+            var rootObj = await DeserializeRecipieAsync(requestUri);
 
+            if (rootObj != null)
+            {
+                Random rnd = new Random();
+                int randomIndex = rnd.Next(rootObj.Results.Count);
+
+                var randomItem = rootObj.Results[randomIndex].Href;
+                message = randomItem;
+
+                var messageDialog = new MessageDialog(message);
+                await messageDialog.ShowAsync();
+            }
+            return message;
+        }
+
+        public async Task<RootObject> DeserializeRecipieAsync(Uri requestUri)
+        {
             string httpResponseBody = await GetResponseBodyAsync(requestUri);
 
             if (!String.IsNullOrEmpty(httpResponseBody))
@@ -98,19 +115,9 @@ namespace ProjectRecept
                     Href = rootObj.Href,
                     Results = rootObj.Results
                 };
-
-                Random rnd = new Random();
-                int randomIndex = rnd.Next(rootObj.Results.Count);
-                var randomItem = rootObj.Results[randomIndex].Href;
-                message = randomItem;
-
-                var messageDialog = new MessageDialog(message);
-                await messageDialog.ShowAsync();
-
-                return message;           
+                return root;
             }
-
-            return message;
+            return null;
         }
 
         public void GetRecepieAsync(object sender, RoutedEventArgs e)
@@ -122,13 +129,13 @@ namespace ProjectRecept
             //Try cathcen är egentligen till för när vi ska visa upp websida i xaml
             try
             {
-                RecipeView recipiePage = new RecipeView(); 
+                RecipeView recipiePage = new RecipeView();
                 this.Content = recipiePage;
 
                 // hur få in denna targetUri med till recipiePage?
                 Uri targetUri = new Uri(recipeURL);
-                
-                
+
+
             }
             catch (FormatException ex)
             {
