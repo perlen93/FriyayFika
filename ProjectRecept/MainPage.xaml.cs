@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ProjectRecept.Models;
 using ProjectRecept.Views;
 using System;
 using System.Collections;
@@ -26,23 +27,7 @@ namespace ProjectRecept
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    /// 
-    public class Result
-    {
-        public string title { get; set; }
-        public string href { get; set; }
-        public string ingredients { get; set; }
-        public string thumbnail { get; set; }
-    }
-
-    public class RootObject
-    {
-        public string title { get; set; }
-        public double version { get; set; }
-        public string href { get; set; }
-        public List<Result> results { get; set; }
-    }
-
+    ///
     public sealed partial class MainPage : Page
     {
         public MainPage()
@@ -108,26 +93,23 @@ namespace ProjectRecept
 
                 RootObject root = new RootObject
                 {
-                    title = rootObj.title,
-                    version = rootObj.version,
-                    href = rootObj.href,
-                    results = rootObj.results
+                    Title = rootObj.Title,
+                    Version = rootObj.Version,
+                    Href = rootObj.Href,
+                    Results = rootObj.Results
                 };
 
                 Random rnd = new Random();
-                int randomIndex = rnd.Next(rootObj.results.Count);
-                var randomItem = rootObj.results[randomIndex].href;
+                int randomIndex = rnd.Next(rootObj.Results.Count);
+                var randomItem = rootObj.Results[randomIndex].Href;
                 message = randomItem;
 
                 var messageDialog = new MessageDialog(message);
                 await messageDialog.ShowAsync();
 
-                return message;
-
-                // nu returnerar den URL strängen. Denna behöver läggas in 
-                // koppla så knappen redriectar till RecipeVIew
-                // .Navigate(typeof(RecipeView)); 
+                return message;           
             }
+
             return message;
         }
 
@@ -135,15 +117,17 @@ namespace ProjectRecept
         {
             var recipeURL = GetRandomRecipieURL().ToString();
 
-            //här kan vi anv. oss av reseptURL o skicka den till view 
+            //här kan vi anv. oss av reseptURL o skicka den till ReipieView 
             // där webView1 borde reppar den view vi vill skicka
+            //Try cathcen är egentligen till för när vi ska visa upp websida i xaml
             try
             {
-                RecipeView mynewPage = new RecipeView(); 
-                this.Content = mynewPage;
+                RecipeView recipiePage = new RecipeView(); 
+                this.Content = recipiePage;
 
+                // hur få in denna targetUri med till recipiePage?
                 Uri targetUri = new Uri(recipeURL);
-                // denna fungerar inte för att denna är MainPage.xaml.cs och "Länkad till Mainpage.xaml och inte till recipieView.xaml?? 
+                
                 
             }
             catch (FormatException ex)
