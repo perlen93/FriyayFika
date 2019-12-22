@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectRecept.Models
 {
-    class Result
+    public class Result
     {
         public string Title { get; set; }
         public string Href { get; set; }
