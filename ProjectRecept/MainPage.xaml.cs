@@ -64,8 +64,8 @@ namespace ProjectRecept
             if (!headers.UserAgent.TryParseAdd(header))
             {
                 throw new Exception("Invalid header value: " + header);
-            }         
-            
+            }
+
             Windows.Web.Http.HttpResponseMessage httpResponse = new Windows.Web.Http.HttpResponseMessage();
             string httpResponseBody = "";
 
@@ -83,10 +83,11 @@ namespace ProjectRecept
             return httpResponseBody;
         }
 
-        private async Task<string> GetRecepieAsync(object sender, RoutedEventArgs e)
-        { 
+        private async Task<string> GetRandomRecipieURL()
+        {
             var inputIngredient = CheckSpecifiedIngredients();
             string uri = "";
+            var message = "hej";
 
             if (String.IsNullOrEmpty(inputIngredient))
             {
@@ -104,7 +105,6 @@ namespace ProjectRecept
             if (!String.IsNullOrEmpty(httpResponseBody))
             {
                 var rootObj = JsonConvert.DeserializeObject<RootObject>(httpResponseBody);
-                var message = "";
 
                 RootObject root = new RootObject
                 {
@@ -117,31 +117,54 @@ namespace ProjectRecept
                 Random rnd = new Random();
                 int randomIndex = rnd.Next(rootObj.results.Count);
                 var randomItem = rootObj.results[randomIndex].href;
-                message = randomItem;               
-               
+                message = randomItem;
+
                 var messageDialog = new MessageDialog(message);
                 await messageDialog.ShowAsync();
 
                 return message;
+
                 // nu returnerar den URL strängen. Denna behöver läggas in 
                 // koppla så knappen redriectar till RecipeVIew
                 // .Navigate(typeof(RecipeView)); 
+            }
+            return message;
+        }
+
+        public void GetRecepieAsync(object sender, RoutedEventArgs e)
+        {
+            var recipeURL = GetRandomRecipieURL().ToString();
+
+            //här kan vi anv. oss av reseptURL o skicka den till view 
+            // där webView1 borde reppar den view vi vill skicka
+            try
+            {
+                RecipeView mynewPage = new RecipeView(); 
+                this.Content = mynewPage;
+
+                Uri targetUri = new Uri(recipeURL);
+                // denna fungerar inte för att denna är MainPage.xaml.cs och "Länkad till Mainpage.xaml och inte till recipieView.xaml?? 
+                
+            }
+            catch (FormatException ex)
+            {
+                // Bad address.
             }
         }
 
         public string CheckSpecifiedIngredients()
         {
             var specifiedIngredients = new List<string>();
-            CheckBox[] checkboxes = new CheckBox[] 
+            CheckBox[] checkboxes = new CheckBox[]
             { Butter, Cinnamon, Sugar, Chocolate };
 
             foreach (var ingredient in checkboxes)
             {
                 if (ingredient.IsChecked == true)
                 {
-                   specifiedIngredients.Add(ingredient.Content.ToString());
+                    specifiedIngredients.Add(ingredient.Content.ToString());
                 }
-            }                   
+            }
 
             string choosenIngredients = "";
             foreach (var specified in specifiedIngredients)
@@ -151,7 +174,5 @@ namespace ProjectRecept
 
             return choosenIngredients;
         }
-
-
     }
 }
