@@ -48,23 +48,28 @@
                     HorizontalAlignment="Center"
                     Grid.Row="1"
                     Margin="0 10 0 0"
-                     x:Name="stackPanel">
+                    x:Name="stackPanel">
 
             <CheckBox x:Name="Butter"
-                        Content="Butter"
-                          Tag="Butter"/>
+                      Content="Butter"
+                      Tag="Butter"
+                      IsChecked="{Binding Ingredient.Butter}"/>                       
 
             <CheckBox x:Name="Cinnamon"
-                          Content="Cinnamon"
-                          Tag="Cinnamon"/>
-
+                      Content="Cinnamon"
+                      IsChecked="{Binding Ingredient.Cinnamon}"
+                      Tag="Cinnamon"/>
+           
             <CheckBox x:Name="Sugar"
-                        Content="Sugar"
-                          Tag="Sugar"/>
+                      Content="Sugar"
+                      IsChecked="{Binding Ingredient.Sugar}"
+                      Tag="Sugar"/>
 
             <CheckBox x:Name="Chocolate"
-                        Content="Chocolate"
-                          Tag="Chocolate"/>
+                      Content="Chocolate"
+                      Tag="Chocolate"
+                      IsChecked="{Binding Ingredient.Chocolate}"/>
+            
         </StackPanel>
 
         <RelativePanel Grid.Row="3" Background="LightPink" >
@@ -75,7 +80,7 @@
                 Content="Generate"
                 Background="White"
                 Foreground="Black"
-                Click="GetRecepieAsync"/>
+                Click="OnClick_ValidatePassword"/>
         </RelativePanel>
     </Grid>
 </Page>
